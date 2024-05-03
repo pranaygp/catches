@@ -1,41 +1,88 @@
-# catchme
+# ⚽ catches
 
-An npm library called 'catchme' in TypeScript that executes a user-provided function and returns a fallback value if the function throws an error.
+Some functions throw errors. Maybe you don't care about any errors. The show must go on.
+
+Maybe you do this:
+
+```typescript
+let data: string | undefined
+try {
+  data = getSomeString()
+} catch () {
+  // Silently ignore the error.
+  // We don't really need the data anyway.
+}
+
+```
+
+That's a lot of lines.
+
+We can do better
+
+Introducing `catches`
+
+```typescript
+const data = catches(getSomeString) // => string | undefined
+```
+
+It's that easy
+
+There's more!
+
+```typescript
+// want to fallback if the function throws? easy
+
+const data = catches(getSomeString) ?? "fallback" // => string
+
+// what if the function is synchronous?
+// what if it is async?
+// and what if the promise is rejected
+// and what if the function throws even before a promise is returned
+
+// ...
+
+// what do you think?
+// of course it still works
+const data = await catches(async () => "...") ?? "fallback"
+
+
+// wait. but what if my function needs arguments?
+
+// well. just add them at the end
+const data = catches(getSomeString, 1, 2)
+
+// easy
+```
+
 
 ## Installation
 
 ```bash
-npm install catchme
+npm install catches
+
+# stop
+# are you srsly using npm
+# it's 2024 (or later)
+
+bun i catches # (note: not a real command)
+
+# don't like bun?
+# well lucky you
+# this is javascript
+
+yarn add catches
+pnpm i catches
+oro add catches
 ```
 
-## Usage
-
-```typescript
-import { catchMe } from 'catchme';
-
-// Define a user-provided function
-function divide(a: number, b: number): number {
-  if (b === 0) {
-    throw new Error('Cannot divide by zero');
-  }
-  return a / b;
-}
-
-// Use the catchMe function to execute the user-provided function
-const result = catchMe(divide, 10, 0, 'Fallback value');
-
-console.log(result); // Output: 'Fallback value'
-```
-
-The `catchMe` function takes a user-provided function as the first argument, followed by any arguments required by the function. If the user-provided function throws an error, the `catchMe` function returns the fallback value provided as the last argument.
 
 ## Contributing
 
-Contributions are welcome! Please follow the [contribution guidelines](CONTRIBUTING.md) when making pull requests.
+I mean. It's kinda done right? There's nothing left here. Stop reading, go use `catches`, save yourself some time, spend it with your family. You won't get this time back. I'm serious. Look outside. What a beautiful day. Now look at this README. Do you really want to contribute to this? I mean...
+
+But no, seriously. If you do want to contribute. Please do. I'd love that.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GPL v3 or Later](LICENSE).
 ```
-
-This README.md file provides an overview of the library, installation instructions, usage examples, information on contributing, and the license details.

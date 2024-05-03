@@ -1,10 +1,10 @@
 import { describe, it, expect } from "bun:test";
-import { catchMe } from "../src/index";
+import { catches } from "../src/index";
 
 describe("catchMe", () => {
   describe("sync", () => {
     it("should return the callback value if the function does not throw", () => {
-      const result = catchMe((): string => {
+      const result = catches((): string => {
         return "foo";
       });
 
@@ -12,7 +12,7 @@ describe("catchMe", () => {
     });
 
     it("should return undefined if the function throws", () => {
-      const result = catchMe((): string => {
+      const result = catches((): string => {
         throw new Error();
       });
 
@@ -21,7 +21,7 @@ describe("catchMe", () => {
 
     it("should return the fallback value if the function throws", () => {
       const fallbackValue = "bar";
-      const result = catchMe((): string => {
+      const result = catches((): string => {
         throw new Error();
       }, fallbackValue);
 
@@ -31,7 +31,7 @@ describe("catchMe", () => {
 
   describe("async", () => {
     it("should return the callback value if the function does not throw", async () => {
-      const result = await catchMe((): Promise<string> => {
+      const result = await catches((): Promise<string> => {
         return Promise.resolve("foo");
       });
 
@@ -39,7 +39,7 @@ describe("catchMe", () => {
     });
 
     it("should return undefined if the function itself throws", async () => {
-      const result = await catchMe((): Promise<string> => {
+      const result = await catches((): Promise<string> => {
         throw new Error();
       });
 
@@ -48,7 +48,7 @@ describe("catchMe", () => {
 
     it("should return the fallback value if the function itself throws", async () => {
       const fallbackValue = "bar";
-      const result = await catchMe((): Promise<string> => {
+      const result = await catches((): Promise<string> => {
         throw new Error();
       }, fallbackValue);
 
@@ -56,7 +56,7 @@ describe("catchMe", () => {
     });
 
     it("should return undefined if the promise is rejected", async () => {
-      const result = await catchMe((): Promise<string> => {
+      const result = await catches((): Promise<string> => {
         return Promise.reject();
       });
 
@@ -65,7 +65,7 @@ describe("catchMe", () => {
 
     it("should return the fallback value if the promise is rejected", async () => {
       const fallbackValue = "bar";
-      const result = await catchMe((): Promise<string> => {
+      const result = await catches((): Promise<string> => {
         return Promise.reject();
       }, fallbackValue);
 

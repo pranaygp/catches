@@ -1,5 +1,5 @@
 {
-  "name": "catchme",
+  "name": "catches",
   "version": "0.0.1",
   "description": "Catch errors and return a fallback instead",
   "main": "dist/index.js",

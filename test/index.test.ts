@@ -11,6 +11,18 @@ describe("catchMe", () => {
       expect(result).toEqual("foo");
     });
 
+    it("should pass arguments to the function", () => {
+      const result = catches(
+        (a: number, b: number): number => {
+          return a + b;
+        },
+        1,
+        2
+      );
+
+      expect(result).toEqual(3);
+    });
+
     it("should return undefined if the function throws", () => {
       const result = catches((): string => {
         throw new Error();
@@ -21,9 +33,10 @@ describe("catchMe", () => {
 
     it("should return the fallback value if the function throws", () => {
       const fallbackValue = "bar";
-      const result = catches((): string => {
-        throw new Error();
-      }, fallbackValue);
+      const result =
+        catches((): string => {
+          throw new Error();
+        }) ?? fallbackValue;
 
       expect(result).toEqual(fallbackValue);
     });
@@ -38,6 +51,18 @@ describe("catchMe", () => {
       expect(result).toEqual("foo");
     });
 
+    it("should pass arguments to the function", async () => {
+      const result = await catches(
+        (a: number, b: number): Promise<number> => {
+          return Promise.resolve(a + b);
+        },
+        1,
+        2
+      );
+
+      expect(result).toEqual(3);
+    });
+
     it("should return undefined if the function itself throws", async () => {
       const result = await catches((): Promise<string> => {
         throw new Error();
@@ -48,9 +73,10 @@ describe("catchMe", () => {
 
     it("should return the fallback value if the function itself throws", async () => {
       const fallbackValue = "bar";
-      const result = await catches((): Promise<string> => {
-        throw new Error();
-      }, fallbackValue);
+      const result =
+        (await catches((): Promise<string> => {
+          throw new Error();
+        })) ?? fallbackValue;
 
       expect(result).toEqual(fallbackValue);
     });
@@ -65,9 +91,10 @@ describe("catchMe", () => {
 
     it("should return the fallback value if the promise is rejected", async () => {
       const fallbackValue = "bar";
-      const result = await catches((): Promise<string> => {
-        return Promise.reject();
-      }, fallbackValue);
+      const result =
+        (await catches((): Promise<string> => {
+          return Promise.reject();
+        })) ?? fallbackValue;
 
       expect(result).toEqual(fallbackValue);
     });

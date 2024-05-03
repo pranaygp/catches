@@ -1,25 +1,26 @@
 type NotPromise<T> = T extends Promise<any> ? never : T;
 
-export function catches<U, V = undefined>(
-  func: () => Promise<U>,
-  fallback?: V
-): Promise<U | V>;
-export function catches<U, V = undefined>(
-  func: () => NotPromise<U>,
-  fallback?: V
-): U | V;
+type AsyncFunction = (...args: any[]) => Promise<any>;
+type SyncFunction = (...args: any[]) => NotPromise<any>;
 
-export function catches<U, V = undefined>(
-  func: () => U,
-  fallback?: V
-): U | V | Promise<U | V> {
+export function catches<T extends AsyncFunction>(
+  func: T,
+  ...args: Parameters<T>
+): ReturnType<T> | Promise<undefined> | undefined;
+export function catches<T extends SyncFunction>(
+  func: T,
+  ...args: Parameters<T>
+): ReturnType<T> | undefined;
+
+export function catches<T extends (...args: any[]) => any>(
+  func: T,
+  ...args: Parameters<T>
+): ReturnType<T> | Promise<undefined> | undefined {
   try {
-    const ret = func();
+    const ret = func(...args);
     if (ret instanceof Promise) {
-      return ret.catch(() => fallback);
+      return ret.catch(() => {});
     }
     return ret;
-  } catch (_) {
-    return fallback as V;
-  }
+  } catch (_) {}
 }

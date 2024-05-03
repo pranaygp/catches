@@ -1,0 +1,24 @@
+{
+  "name": "catchme",
+  "version": "0.0.1",
+  "description": "Catch errors and return a fallback instead",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "bun test",
+    "build": "bun run build.mjs",
+    "prepublishOnly": "bun run test && bun run build"
+  },
+  "keywords": [
+    "errors",
+    "catch",
+    "fallback"
+  ],
+  "author": "Pranay Prakash <hey@pranay.gp>",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "@types/bun": "1.1.1",
+    "bun-plugin-dts": "0.2.3",
+    "typescript": "5.4.5"
+  }
+}

@@ -64,7 +64,7 @@ npm install catches
 # are you srsly using npm
 # it's 2024 (or later)
 
-bun i catches # (note: not a real command)
+bun i catches
 
 # don't like bun?
 # well lucky you

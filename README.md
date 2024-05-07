@@ -85,4 +85,3 @@ But no, seriously. If you do want to contribute. Please do. I'd love that.
 ## License
 
 This project is licensed under the [GPL v3 or Later](LICENSE).
-```
